@@ -6,7 +6,7 @@
 #include <spi4teensy3.h>
 #include <SPI.h>
 #endif
-
+#include <math.h>
 //Servo servoz;
 //Servo servox;
 USB Usb;
@@ -37,10 +37,10 @@ void setup() {
   pinMode(motor4pin, OUTPUT); //PWM
   pinMode(motor4pwm, OUTPUT);
   pinMode(motor4pin + 1, OUTPUT);
-  pinMode(armpin,OUTPUT);
-  pinMode(armpin+1,OUTPUT);
-  pinMode(armpwm,OUTPUT);
-  Serial.begin(115200); 
+  pinMode(armpin, OUTPUT);
+  pinMode(armpin + 1, OUTPUT);
+  pinMode(armpwm, OUTPUT);
+  Serial.begin(115200);
 #if !defined(__MIPSEL__)
   while (!Serial); // Wait for serial port to connect - used on Leonardo, Teensy and other boards with built-in USB CDC serial connection
 #endif
@@ -67,10 +67,10 @@ void loop() {
     //PS4.setRumbleOn(xh, yh);
 
     if (int m = PS4.getAnalogButton(L2))
-      motor(armpin,armpwm, 2, m);
+      motor(armpin, armpwm, 2, m);
     if (int m = PS4.getAnalogButton(R2))
-      motor(armpin,armpwm, 1, m);
-      
+      motor(armpin, armpwm, 1, m);
+
     if (PS4.getButtonClick(PS)) {
       Serial.print(F("\r\nPS"));
       PS4.disconnect();
@@ -91,25 +91,100 @@ void loop() {
       m_turnshun(val);
     }
     l = 0;
-    if (xh > 137) {
-      int val = (xh - 137) * 2;
-      m_right(val);
+
+
+    if (xh > 137 && yh < 117) {
+      float vx = (xh - 137) * 2;
+      float vy = (117 - yh) * 2;
+      float a = atan(vy / vx);
+      float v = sqrt(vx * vx + vy * vy);
+      if (a > 45) {
+        float vvx = v * cos(a - 45);
+        float vvy = v * sin(a - 45);
+        motor(motor1pin, motor1pwm, 2, vvy);
+        motor(motor2pin, motor2pwm, 2, vvy);
+        motor(motor3pin, motor3pwm, 1, vvx);
+        motor(motor4pin, motor4pwm, 1, vvx);
+      }
+      if (a < 45) {
+        float vvx = v * cos(45 - a);
+        float vvy = v * sin(45 - a);
+        motor(motor1pin, motor1pwm, 2, vvy);
+        motor(motor2pin, motor2pwm, 2, vvy);
+        motor(motor3pin, motor3pwm, 2, vvx);
+        motor(motor4pin, motor4pwm, 2, vvx);
+      }
+    }
+    
+    else if (xh > 137 && yh > 137) {
+      float vx = (xh - 137) * 2;
+      float vy = (yh - 137) * 2;
+      float a = atan(vy / vx);
+      float v = sqrt(vx * vx + vy * vy);
+      if (a > 45) {
+        float vvx = v * cos(a - 45);
+        float vvy = v * sin(a - 45);
+        motor(motor1pin, motor1pwm, 1, vvy);
+        motor(motor2pin, motor2pwm, 1, vvy);
+        motor(motor3pin, motor3pwm, 2, vvx);
+        motor(motor4pin, motor4pwm, 2, vvx);
+      }
+      if (a < 45) {
+        float vvx = v * cos(45 - a);
+        float vvy = v * sin(45 - a);
+        motor(motor1pin, motor1pwm, 2, vvy);
+        motor(motor2pin, motor2pwm, 2, vvy);
+        motor(motor3pin, motor3pwm, 2, vvx);
+        motor(motor4pin, motor4pwm, 2, vvx);
+      }
     }
 
-    else if (xh < 117) {
-      int val = (117 - xh) * 2;
-      m_left(val);
-    }
-    xh = 0;
-    if (yh > 137) {
-      int val = (yh - 137) * 2;
-      m_backward(val);
+    else if (xh < 117 && yh > 137) {
+      float vx = (117 - xh) * 2;
+      float vy = (yh - 137) * 2;
+      float a = atan(vy / vx);
+      float v = sqrt(vx * vx + vy * vy);
+      if (a > 45) {
+        float vvx = v * cos(a - 45);
+        float vvy = v * sin(a - 45);
+        motor(motor1pin, motor1pwm, 1, vvy);
+        motor(motor2pin, motor2pwm, 1, vvy);
+        motor(motor3pin, motor3pwm, 2, vvx);
+        motor(motor4pin, motor4pwm, 2, vvx);
+      }
+      if (a < 45) {
+        float vvx = v * cos(45 - a);
+        float vvy = v * sin(45 - a);
+        motor(motor1pin, motor1pwm, 1, vvy);
+        motor(motor2pin, motor2pwm, 1, vvy);
+        motor(motor3pin, motor3pwm, 1, vvx);
+        motor(motor4pin, motor4pwm, 1, vvx);
+      }
     }
 
-    else if (yh < 117) {
-      int val = (117 - yh) * 2;
-      m_forward(val);
+    else if (xh < 117 && yh < 117) {
+      float vx = (117 - xh) * 2;
+      float vy = (117 - yh) * 2;
+      float a = atan(vy / vx);
+      float v = sqrt(vx * vx + vy * vy);
+      if (a > 45) {
+        float vvx = v * cos(a - 45);
+        float vvy = v * sin(a - 45);
+        motor(motor1pin, motor1pwm, 2, vvy);
+        motor(motor2pin, motor2pwm, 2, vvy);
+        motor(motor3pin, motor3pwm, 1, vvx);
+        motor(motor4pin, motor4pwm, 1, vvx);
+      }
+      if (a < 45) {
+        float vvx = v * cos(45 - a);
+        float vvy = v * sin(45 - a);
+        motor(motor1pin, motor1pwm, 1, vvy);
+        motor(motor2pin, motor2pwm, 1, vvy);
+        motor(motor3pin, motor3pwm, 1, vvx);
+        motor(motor4pin, motor4pwm, 1, vvx);
+      }
     }
+
   }
 
   //归零
