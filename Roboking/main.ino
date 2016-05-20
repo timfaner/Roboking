@@ -54,8 +54,8 @@ int l, yh, xh;
 int i = 0;
 void loop() {
   Usb.Task();
-  if (i % 90 == 0)
-    Serial.println("ha");
+  //if (i % 90 == 0)
+  // Serial.println("ha");
 
   if (PS4.connected()) {
     l = PS4.getAnalogHat(RightHatX);
@@ -65,46 +65,51 @@ void loop() {
 
     if (PS4.getButtonClick(PS)) {
       Serial.print(F("\r\nPS"));
-      PS4.disconnect();}
+      PS4.disconnect();
+    }
     if (PS4.getButtonClick(CROSS)) {
+      m_stop();
       state = !state;
     }
     if (state) PS4.setLedFlash(10, 10);
-    else PS4.setLedFlash(1000, 1000);  
+    else PS4.setLedFlash(1000, 1000);
     if (l < 116) {
-
+      int val=(116-l)*2;
+      m_turnshun(val);
     }
     if (l > 137) {
-
+      int val=(l-137)*2;
+      m_turnni(val);
     }
 
     if (xh > 137) {
-
+      int val = (xh-137)*2;
+      m_right(val);
     }
 
     if (xh < 117) {
-
+      int val = (117-xh)*2;
+      m_left(val);
     }
 
     if (yh > 137) {
-
+      int val = (yh-137)*2;
+      m_backward(val);
     }
 
     if (yh < 117) {
-
+      int val = (117-yh)*2;
+      m_forward(val);
     }
   }
-  
+
   l = 0;        //归零
   yh = 0;
   xh = 0;
 
-  i = i + 1;
-  if (i % 90 == 0)
-    Serial.println("all done");
-
-
-  delay(2);
+  //i = i + 1;
+  //if (i % 90 == 0)
+  // Serial.println("all done");
 }
 
 
