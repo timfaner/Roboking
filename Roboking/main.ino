@@ -50,96 +50,61 @@ void setup() {
 
 
 
-int l,r,yh,xh,pitch[2],roll[2];
-char printTouch;
+int l, yh, xh;
+int i = 0;
 void loop() {
   Usb.Task();
-  
-  if(PS4.connected()){
-    l =PS4.getAnalogHat(RightHatX);
-    //r = PS4.getAnalogButton(R2);
+  if (i % 90 == 0)
+    Serial.println("ha");
+
+  if (PS4.connected()) {
+    l = PS4.getAnalogHat(RightHatX);
     yh = PS4.getAnalogHat(LeftHatX);
     xh = PS4.getAnalogHat(LeftHatY);
-    PS4.setRumbleOn(xh,yh);
-    //pitch[1] = PS4.getAngle(Pitch);
-    //roll[1] = PS4.getAngle(Roll);
-    
-    /*if (PS4.getButtonClick(TOUCHPAD)) printTouch = !printTouch;
-    if (printTouch){
-      int dposz = roll[1]-roll[0];
-      int dposx = pitch[1]-pitch[0];
-      servoz.write(posz+dposz);
-      servox.write(posx+dposx);
-      
-    }
-    */
-    if (PS4.getButtonClick(CROSS)){
-      state = !state;
-      motor(motor1pin,motor1pwm,0,0);
-      motor(motor2pin,motor2pwm,0,0);
-      motor(motor3pin,motor3pwm,0,0);
-      motor(motor4pin,motor4pwm,0,0);
-    }
-    if (state) PS4.setLedFlash(10, 10);
-    else PS4.setLed(Blue);
-    
+    //PS4.setRumbleOn(xh, yh);
+
     if (PS4.getButtonClick(PS)) {
       Serial.print(F("\r\nPS"));
       PS4.disconnect();}
-    if (l<116) {
-      int val=(255-l)/2;
-      PS4.setLed(Green);
-      motor(motor1pin,motor1pwm,1,val);
-      motor(motor2pin,motor2pwm,2,val);
-      motor(motor3pin,motor3pwm,2,val);
-      motor(motor4pin,motor4pwm,1,val);
+    if (PS4.getButtonClick(CROSS)) {
+      state = !state;
     }
-    if (l>137) {
-      int val=l/2;
-      PS4.setLed(Green);
-      motor(motor1pin,motor1pwm,2,val);
-      motor(motor2pin,motor2pwm,1,val);
-      motor(motor3pin,motor3pwm,1,val);
-      motor(motor4pin,motor4pwm,2,val);
-      
+    if (state) PS4.setLedFlash(10, 10);
+    else PS4.setLedFlash(1000, 1000);  
+    if (l < 116) {
+
     }
-    if (xh > 137){
-   
-    int val=(xh-137)*2;
-    PS4.setLed(Green);
-    motor(motor1pin,motor1pwm,2,val);
-    motor(motor2pin,motor2pwm,2,val);
-    
+    if (l > 137) {
+
     }
-   if (xh < 117){
-    int val=(xh)*2;
-    PS4.setLed(Green);
-    motor(motor1pin,motor1pwm,1,255-val);
-    motor(motor2pin,motor2pwm,1,255-val);
-    
+
+    if (xh > 137) {
+
     }
-  if (yh > 137){
-    int val=(yh-137)*2;
-    PS4.setLed(Red);
-    motor(motor3pin,motor3pwm,1,val);
-    motor(motor4pin,motor4pwm,1,val);
-    
+
+    if (xh < 117) {
+
     }
-   if (yh < 117){
-    int val=(yh)*2;
-    PS4.setLed(Blue);
-    motor(motor3pin,motor3pwm,2,255-val);
-    motor(motor4pin,motor4pwm,2,255-val);
-    
+
+    if (yh > 137) {
+
     }
+
+    if (yh < 117) {
+
+    }
+  }
   
-}
-l = 0;
-//r = 0;
-yh = 0;
-xh = 0;
-//pitch[0] = pitch[1];
-//roll[0] = roll[1];
+  l = 0;        //归零
+  yh = 0;
+  xh = 0;
+
+  i = i + 1;
+  if (i % 90 == 0)
+    Serial.println("all done");
+
+
+  delay(2);
 }
 
 
