@@ -22,7 +22,7 @@ void motor(char pin, char pwmpin, char state, int val) //参数pin是输入的�
   }
   else if (state == 3)                  //当state为3时刹车
   {
-    digitalWrite(pin, 0);
-    digitalWrite(pin + 1, 0);
+    digitalWrite(pin, 1);
+    digitalWrite(pin + 1, 1);
   }
 }

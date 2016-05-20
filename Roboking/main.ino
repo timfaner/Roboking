@@ -37,7 +37,10 @@ void setup() {
   pinMode(motor4pin, OUTPUT); //PWM
   pinMode(motor4pwm, OUTPUT);
   pinMode(motor4pin + 1, OUTPUT);
-  Serial.begin(115200);
+  pinMode(armpin,OUTPUT);
+  pinMode(armpin+1,OUTPUT);
+  pinMode(armpwm,OUTPUT);
+  Serial.begin(115200); 
 #if !defined(__MIPSEL__)
   while (!Serial); // Wait for serial port to connect - used on Leonardo, Teensy and other boards with built-in USB CDC serial connection
 #endif
@@ -63,6 +66,11 @@ void loop() {
     xh = PS4.getAnalogHat(LeftHatY);
     //PS4.setRumbleOn(xh, yh);
 
+    if (int m = PS4.getAnalogButton(L2))
+      motor(armpin,armpwm, 2, m);
+    if (int m = PS4.getAnalogButton(R2))
+      motor(armpin,armpwm, 1, m);
+      
     if (PS4.getButtonClick(PS)) {
       Serial.print(F("\r\nPS"));
       PS4.disconnect();
@@ -73,14 +81,14 @@ void loop() {
     }
     if (state) PS4.setLedFlash(10, 10);
     else PS4.setLedFlash(1000, 1000);
-   
+
     if (l < 116) {
-      int val = (116 - l) * 2;
-      m_turnshun(val);
+      int val = (116 - l) * 1.5;
+      m_turnni(val);
     }
     else if (l > 137) {
-      int val = (l - 137) * 2;
-      m_turnni(val);
+      int val = (l - 137) * 1.5;
+      m_turnshun(val);
     }
     l = 0;
     if (xh > 137) {
