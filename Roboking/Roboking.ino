@@ -1,7 +1,7 @@
 #define motor1pin 22
-#define motor1pwm 13
+#define motor1pwm 9
 #define motor2pin 26
-#define motor2pwm 10
+#define motor2pwm 8
 #define motor3pin 30
 #define motor3pwm 7
 #define motor4pin 34

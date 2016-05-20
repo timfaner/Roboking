@@ -73,39 +73,39 @@ void loop() {
     }
     if (state) PS4.setLedFlash(10, 10);
     else PS4.setLedFlash(1000, 1000);
+   
     if (l < 116) {
-      int val=(116-l)*2;
+      int val = (116 - l) * 2;
       m_turnshun(val);
     }
-    if (l > 137) {
-      int val=(l-137)*2;
+    else if (l > 137) {
+      int val = (l - 137) * 2;
       m_turnni(val);
     }
-
+    l = 0;
     if (xh > 137) {
-      int val = (xh-137)*2;
+      int val = (xh - 137) * 2;
       m_right(val);
     }
 
-    if (xh < 117) {
-      int val = (117-xh)*2;
+    else if (xh < 117) {
+      int val = (117 - xh) * 2;
       m_left(val);
     }
-
+    xh = 0;
     if (yh > 137) {
-      int val = (yh-137)*2;
+      int val = (yh - 137) * 2;
       m_backward(val);
     }
 
-    if (yh < 117) {
-      int val = (117-yh)*2;
+    else if (yh < 117) {
+      int val = (117 - yh) * 2;
       m_forward(val);
     }
   }
 
-  l = 0;        //归零
+  //归零
   yh = 0;
-  xh = 0;
 
   //i = i + 1;
   //if (i % 90 == 0)
