@@ -107,12 +107,13 @@ void loop() {
         motor(motor4pin, motor4pwm, 1, vvx);
       }
       if (a < 45) {
-        float vvx = v * cos(45 - a);
-        float vvy = v * sin(45 - a);
+        float vvx = abs(v * cos(45 - a));
+        float vvy = abs(v * sin(45 - a));
         motor(motor1pin, motor1pwm, 2, vvy);
         motor(motor2pin, motor2pwm, 2, vvy);
         motor(motor3pin, motor3pwm, 2, vvx);
         motor(motor4pin, motor4pwm, 2, vvx);
+        daying(vvx,vvy);
       }
     }
     
@@ -128,14 +129,16 @@ void loop() {
         motor(motor2pin, motor2pwm, 1, vvy);
         motor(motor3pin, motor3pwm, 2, vvx);
         motor(motor4pin, motor4pwm, 2, vvx);
+        daying(vvx,vvy);
       }
       if (a < 45) {
-        float vvx = v * cos(45 - a);
-        float vvy = v * sin(45 - a);
+        float vvx = abs(v * cos(45 - a));
+        float vvy = abs(v * sin(45 - a));
         motor(motor1pin, motor1pwm, 2, vvy);
         motor(motor2pin, motor2pwm, 2, vvy);
         motor(motor3pin, motor3pwm, 2, vvx);
         motor(motor4pin, motor4pwm, 2, vvx);
+        daying(vvx,vvy);
       }
     }
 
@@ -151,6 +154,7 @@ void loop() {
         motor(motor2pin, motor2pwm, 1, vvy);
         motor(motor3pin, motor3pwm, 2, vvx);
         motor(motor4pin, motor4pwm, 2, vvx);
+        daying(vvx,vvy);
       }
       if (a < 45) {
         float vvx = v * cos(45 - a);
@@ -159,6 +163,7 @@ void loop() {
         motor(motor2pin, motor2pwm, 1, vvy);
         motor(motor3pin, motor3pwm, 1, vvx);
         motor(motor4pin, motor4pwm, 1, vvx);
+        daying(vvx,vvy);
       }
     }
 
@@ -174,14 +179,16 @@ void loop() {
         motor(motor2pin, motor2pwm, 2, vvy);
         motor(motor3pin, motor3pwm, 1, vvx);
         motor(motor4pin, motor4pwm, 1, vvx);
+        daying(vvx,vvy);
       }
       if (a < 45) {
-        float vvx = v * cos(45 - a);
-        float vvy = v * sin(45 - a);
+        float vvx = abs(v * cos(45 - a));
+        float vvy = abs(v * sin(45 - a));
         motor(motor1pin, motor1pwm, 1, vvy);
         motor(motor2pin, motor2pwm, 1, vvy);
         motor(motor3pin, motor3pwm, 1, vvx);
         motor(motor4pin, motor4pwm, 1, vvx);
+        daying(vvx,vvy);
       }
     }
 

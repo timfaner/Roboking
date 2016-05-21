@@ -48,4 +48,11 @@ void m_turnni(int val) {                  //你时针转
   motor(motor4pin, motor4pwm, 1, val);
   Serial.println("Ni");
 }
+void daying(int vvx,int vvy) {
+  Serial.print("vvx=");
+  Serial.print(vvx);
+  Serial.print(" ; ");
+  Serial.print("vvy=");
+  Serial.println(vvy);
+}
 
