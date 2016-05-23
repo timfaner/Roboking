@@ -65,7 +65,8 @@ void loop() {
     yh = PS4.getAnalogHat(LeftHatX);
     xh = PS4.getAnalogHat(LeftHatY);
     //PS4.setRumbleOn(xh, yh);
-
+    long pos = sqrt((xh-128)*(xh-128)+(yh-128)*(yh-128));
+    
     if (int m = PS4.getAnalogButton(L2))
       motor(armpin, armpwm, 2, m);
     if (int m = PS4.getAnalogButton(R2))
@@ -86,109 +87,109 @@ void loop() {
       int val = (116 - l) * 1.5;
       m_turnni(val);
     }
-    else if (l > 137) {
-      int val = (l - 137) * 1.5;
+    else if (l > 128) {
+      int val = (l - 128) * 1.5;
       m_turnshun(val);
     }
     l = 0;
 
 
-    if (xh > 137 && yh < 117) {
-      float vx = (xh - 137) * 2;
-      float vy = (117 - yh) * 2;
+    if (xh > 128 && yh < 128 && pos >=10) {
+      float vx = (xh - 128) * 2;
+      float vy = (128 - yh) * 2;
       float a = atan(vy / vx);
       float v = sqrt(vx * vx + vy * vy);
       if (a > 45) {
-        float vvx = v * cos(a - 45);
-        float vvy = v * sin(a - 45);
-        motor(motor1pin, motor1pwm, 2, vvy);
-        motor(motor2pin, motor2pwm, 2, vvy);
-        motor(motor3pin, motor3pwm, 1, vvx);
-        motor(motor4pin, motor4pwm, 1, vvx);
+        float v12 = abs(v * cos(a - 45));
+        float v34 = abs(v * sin(a - 45));
+        motor(motor1pin, motor1pwm, 2, v12);
+        motor(motor2pin, motor2pwm, 2, v12);
+        motor(motor3pin, motor3pwm, 1, v34);
+        motor(motor4pin, motor4pwm, 1, v34);
       }
       if (a < 45) {
-        float vvx = abs(v * cos(45 - a));
-        float vvy = abs(v * sin(45 - a));
-        motor(motor1pin, motor1pwm, 2, vvy);
-        motor(motor2pin, motor2pwm, 2, vvy);
-        motor(motor3pin, motor3pwm, 2, vvx);
-        motor(motor4pin, motor4pwm, 2, vvx);
-        daying(vvx,vvy);
+        float v12 = abs(v * cos(45 - a));
+        float v34 = abs(v * sin(45 - a));
+        motor(motor1pin, motor1pwm, 2, v12);
+        motor(motor2pin, motor2pwm, 2, v12);
+        motor(motor3pin, motor3pwm, 2, v34);
+        motor(motor4pin, motor4pwm, 2, v34);
+        daying(v12,v34);
       }
     }
     
-    else if (xh > 137 && yh > 137) {
-      float vx = (xh - 137) * 2;
-      float vy = (yh - 137) * 2;
+    else if (xh > 128 && yh > 128 && pos >=10) {
+      float vx = (xh - 128) * 2;
+      float vy = (yh - 128) * 2;
       float a = atan(vy / vx);
       float v = sqrt(vx * vx + vy * vy);
       if (a > 45) {
-        float vvx = v * cos(a - 45);
-        float vvy = v * sin(a - 45);
-        motor(motor1pin, motor1pwm, 1, vvy);
-        motor(motor2pin, motor2pwm, 1, vvy);
-        motor(motor3pin, motor3pwm, 2, vvx);
-        motor(motor4pin, motor4pwm, 2, vvx);
-        daying(vvx,vvy);
+        float v34 = abs(v * cos(a - 45));
+        float v12 = abs(v * sin(a - 45));
+        motor(motor1pin, motor1pwm, 1, v12);
+        motor(motor2pin, motor2pwm, 1, v12);
+        motor(motor3pin, motor3pwm, 2, v34);
+        motor(motor4pin, motor4pwm, 2, v34);
+        daying(v12,v34);
       }
       if (a < 45) {
-        float vvx = abs(v * cos(45 - a));
-        float vvy = abs(v * sin(45 - a));
-        motor(motor1pin, motor1pwm, 2, vvy);
-        motor(motor2pin, motor2pwm, 2, vvy);
-        motor(motor3pin, motor3pwm, 2, vvx);
-        motor(motor4pin, motor4pwm, 2, vvx);
-        daying(vvx,vvy);
+        float v34 = abs(v * cos(45 - a));
+        float v12 = abs(v * sin(45 - a));
+        motor(motor1pin, motor1pwm, 2, v12);
+        motor(motor2pin, motor2pwm, 2, v12);
+        motor(motor3pin, motor3pwm, 2, v34);
+        motor(motor4pin, motor4pwm, 2, v34);
+        daying(v12,v34);
       }
     }
 
-    else if (xh < 117 && yh > 137) {
-      float vx = (117 - xh) * 2;
-      float vy = (yh - 137) * 2;
+    else if (xh < 128 && yh > 128 && pos >=10) {
+      float vx = (128 - xh) * 2;
+      float vy = (yh - 128) * 2;
       float a = atan(vy / vx);
       float v = sqrt(vx * vx + vy * vy);
       if (a > 45) {
-        float vvx = v * cos(a - 45);
-        float vvy = v * sin(a - 45);
-        motor(motor1pin, motor1pwm, 1, vvy);
-        motor(motor2pin, motor2pwm, 1, vvy);
-        motor(motor3pin, motor3pwm, 2, vvx);
-        motor(motor4pin, motor4pwm, 2, vvx);
-        daying(vvx,vvy);
+        float v12 = abs(v * cos(a - 45));
+        float v34 = abs(v * sin(a - 45));
+        motor(motor1pin, motor1pwm, 1, v12);
+        motor(motor2pin, motor2pwm, 1, v12);
+        motor(motor3pin, motor3pwm, 2, v34);
+        motor(motor4pin, motor4pwm, 2, v34);
+        daying(v12,v34);
       }
       if (a < 45) {
-        float vvx = v * cos(45 - a);
-        float vvy = v * sin(45 - a);
-        motor(motor1pin, motor1pwm, 1, vvy);
-        motor(motor2pin, motor2pwm, 1, vvy);
-        motor(motor3pin, motor3pwm, 1, vvx);
-        motor(motor4pin, motor4pwm, 1, vvx);
-        daying(vvx,vvy);
+        float v12 = abs(v * cos(45 - a));
+        float v34 = abs(v * sin(45 - a));
+        motor(motor1pin, motor1pwm, 1, v12);
+        motor(motor2pin, motor2pwm, 1, v12);
+        motor(motor3pin, motor3pwm, 1, v34);
+        motor(motor4pin, motor4pwm, 1, v34);
+        daying(v12,v34);
       }
     }
 
-    else if (xh < 117 && yh < 117) {
-      float vx = (117 - xh) * 2;
-      float vy = (117 - yh) * 2;
+    else if (xh < 128 && yh < 128 && pos >=10) {
+      float vx = (128 - xh) * 2;
+      float vy = (128 - yh) * 2;
       float a = atan(vy / vx);
       float v = sqrt(vx * vx + vy * vy);
       if (a > 45) {
-        float vvx = v * cos(a - 45);
-        float vvy = v * sin(a - 45);
-        motor(motor1pin, motor1pwm, 2, vvy);
-        motor(motor2pin, motor2pwm, 2, vvy);
-        motor(motor3pin, motor3pwm, 1, vvx);
-        motor(motor4pin, motor4pwm, 1, vvx);
-        daying(vvx,vvy);
+        float v34 = abs(v * cos(a - 45));
+        float v12 = abs(v * sin(a - 45));
+        motor(motor1pin, motor1pwm, 2, v12);
+        motor(motor2pin, motor2pwm, 2, v12);
+        motor(motor3pin, motor3pwm, 1, v34);
+        motor(motor4pin, motor4pwm, 1, v34);
+        daying(v12,v34);
       }
       if (a < 45) {
-        float vvx = abs(v * cos(45 - a));
-        float vvy = abs(v * sin(45 - a));
-        motor(motor1pin, motor1pwm, 1, vvy);
-        motor(motor2pin, motor2pwm, 1, vvy);
-        motor(motor3pin, motor3pwm, 1, vvx);
-        motor(motor4pin, motor4pwm, 1, vvx);
-        daying(vvx,vvy);
+        float v34 = abs(v * cos(45 - a));
+        float v12 = abs(v * sin(45 - a));
+        motor(motor1pin, motor1pwm, 1, v12);
+        motor(motor2pin, motor2pwm, 1, v12);
+        motor(motor3pin, motor3pwm, 1, v34);
+        motor(motor4pin, motor4pwm, 1, v34);
+        daying(v12,v34);
       }
     }
 
